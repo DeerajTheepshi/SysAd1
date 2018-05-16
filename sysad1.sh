@@ -7,7 +7,7 @@ useradd -m prof2 ; echo -e "prof2\nprof2"| passwd prof2
 for a in {1..20} ; do useradd -m student$a; echo -e "st$a\nst$a" | passwd student$a; done
 #
 #creating specified directories
-mkdir /home/prof1/Teaching_material | chown prof1:prof1 /home/prof1/Teaching_material
+mkdir /home/prof1/Teaching_material ; chown prof1:prof1 /home/prof1/Teaching_material
 mkdir /home/prof2/Teaching_material ; chown prof2:prof2 /home/prof2/Teaching_material
 for a in {1..20} ; do mkdir /home/student$a/HomeWork;mkdir /home/student$a/prof1_work;mkdir /home/student$a/prof2_work ; chown -R student$a:student$a student$a/HomeWork;done
 #
@@ -47,10 +47,9 @@ wget http://inductions.delta.nitt.edu/dataStructure.txt
 wget http://inductions.delta.nitt.edu/algorithm.txt
 #
 #allocate folders to prof1
-IFS=$'\n'; for a in $(grep ^* algorithm.txt | sed s/**\ //g) ; do mkdir /home/prof2/Teaching_material/$a ;chmod 770 /home/prof2/Teaching_material/$a; chown -R prof2:prof2 /home/prof2/Teaching_material/$a; done;
-#
+IFS=$'\n'; for a in $(grep '^*' algorithm.txt | sed s/**\ //g) ; do mkdir /home/prof2/Teaching_material/$a ;chmod 770 /home/prof2/Teaching_material/$a; chown -R prof2:prof2 /home/prof2/Teaching_material/$a; done;
 #allocate folders to prof2
-IFS=$'\n'; for a in $(grep ^*  dataStructure.txt | sed s/**\ //g) ; do mkdir /home/prof1/Teaching_material/$a ;chmod 770 /home/prof1/Teaching_material/$a; chown -R prof1:prof1 /home/prof1/Teaching_material/$a; done;
+IFS=$'\n'; for a in $(grep '^*'  dataStructure.txt | sed s/**\ //g) ; do mkdir /home/prof1/Teaching_material/$a ;chmod 770 /home/prof1/Teaching_material/$a; chown -R prof1:prof1 /home/prof1/Teaching_material/$a; done;
 #
 #allocate questions
 sed s/^**\ //g algorithm.txt> al.txt
