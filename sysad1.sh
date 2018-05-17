@@ -67,10 +67,6 @@ echo 'for a in {1..20}; do for j in $(shuf -i 1-45 -n 5) ; do find /home/prof1/ 
 #now we will add a file for adding work to prof2_work
 echo 'for a in {1..20}; do for j in $(shuf -i 1-118 -n 5) ; do find /home/prof2/ -name q$j.txt -exec cp '{}' /home/student$a/prof2_work/q$j.txt \; ;done;done;' > setProf2Work.sh
 #
-#set these two files to crontab manager
-echo '00 17 * * * setProf1Work.sh' >> crontab -e
-echo '00 17 * * * setProf2Work.sh' >> crontab -e
-#
 #assign crontab
 echo '00 17 * * * ./setProf1Work.sh' >> /var/spool/cron/crontabs/root
 echo '00 17 * * * ./setProf2Work.sh' >> /var/spool/cron/crontabs/root
