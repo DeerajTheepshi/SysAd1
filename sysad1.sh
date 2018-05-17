@@ -9,33 +9,33 @@ for a in {1..20} ; do useradd -m student$a; echo -e "st$a\nst$a" | passwd studen
 #creating specified directories
 mkdir /home/prof1/Teaching_material ; chown prof1:prof1 /home/prof1/Teaching_material
 mkdir /home/prof2/Teaching_material ; chown prof2:prof2 /home/prof2/Teaching_material
-for a in {1..20} ; do mkdir /home/student$a/HomeWork;mkdir /home/student$a/prof1_work;mkdir /home/student$a/prof2_work ; chown -R student$a:student$a student$a/HomeWork;done
+for a in `seq 1 20` ; do mkdir /home/student$a/HomeWork;mkdir /home/student$a/prof1_work;mkdir /home/student$a/prof2_work ; chown -R student$a:student$a student$a/HomeWork;done
 #
 #assigning file permissions to hod 
 setfacl -R -m u:hod:rwx /home/prof1/
 setfacl -R -m u:hod:rwx /home/prof2/
 #
 #assgning hod and professor the access to each student
-for a in {1..20};do setfacl -R -m u:hod:rwx /home/student$a ; setfacl -R -m u:prof1:rwx /home/student$a; setfacl -R -m u:prof2:rwx /home/student$a; done
+for a in `seq 1 20`;do setfacl -R -m u:hod:rwx /home/student$a ; setfacl -R -m u:prof1:rwx /home/student$a; setfacl -R -m u:prof2:rwx /home/student$a; done
 #
 #prevent other users from connecting to student
-for a in {1..20};do chmod 770 -R /home/student$a;done
+for a in `seq 1 20`;do chmod 770 -R /home/student$a;done
 #
 #prevent others from accessing prof acc
 chmod 770 /home/prof2/
 chmod 770 /home/prof1/
 #
 #add q1...q50 for prof1
-for a in {1..50} ;do tr -dc A-Za-z0-9 </dev/urandom | head -c 100 > /home/prof1/Teaching_material/q$a.txt;done
+for a in `seq 1 50` ;do tr -dc A-Za-z0-9 </dev/urandom | head -c 100 > /home/prof1/Teaching_material/q$a.txt;done
 #
 #add q1...q50 for prof2
-for a in {1..50} ;do tr -dc A-Za-z0-9 </dev/urandom | head -c 100 > /home/prof2/Teaching_material/q$a.txt;done
+for a in `seq 1 50` ;do tr -dc A-Za-z0-9 </dev/urandom | head -c 100 > /home/prof2/Teaching_material/q$a.txt;done
 #
 #put 5 random questions of prof1 in every prof1_work folder
-for a in {1..20}; do for j in $(shuf -i 1-20 -n 5) ; do cp /home/prof1/Teaching_material/q$j.txt /home/student$a/prof1_work/ ;done;done;
+for a in `seq 1 20`; do for j in $(shuf -i 1-20 -n 5) ; do cp /home/prof1/Teaching_material/q$j.txt /home/student$a/prof1_work/ ;done;done;
 #
 #put 5 random questions of prof2 in every prof2_work folder
-for a in {1..20}; do for j in $(shuf -i 1-20 -n 5) ; do cp /home/prof2/Teaching_material/q$j.txt /home/student$a/prof2_work/ ;done;done;
+for a in `seq 1 20`; do for j in $(shuf -i 1-20 -n 5) ; do cp /home/prof2/Teaching_material/q$j.txt /home/student$a/prof2_work/ ;done;done;
 #
 #HACKER MODE
 #Remove all files from Teaching_material directory
@@ -62,10 +62,10 @@ awk 'BEGIN {number=1};/^[A-Za-z]/ {dName=$0;print dName}; /^\-/ {print > "/home/
 rm /home/student*/*/*.txt
 #
 #now we will add a file for adding work to prof1_work
-echo 'for a in {1..20}; do for j in $(shuf -i 1-45 -n 5) ; do find /home/prof1/ -name q$j.txt -exec cp '{}' /home/student$a/prof1_work/q$j.txt \; ;done;done;' > setProf1Work.sh
+echo 'for a in `seq 1 20`; do for j in $(shuf -i 1-118 -n 5) ; do find /home/prof1/ -name q$j.txt -exec cp {} /home/student$a/prof1_work/ \; ;done;done' > setProf1Work.sh
 #
 #now we will add a file for adding work to prof2_work
-echo 'for a in {1..20}; do for j in $(shuf -i 1-118 -n 5) ; do find /home/prof2/ -name q$j.txt -exec cp '{}' /home/student$a/prof2_work/q$j.txt \; ;done;done;' > setProf2Work.sh
+echo 'for a in `seq 1 20`; do for j in $(shuf -i 1-118 -n 5) ; do find /home/prof2/ -name q$j.txt -exec cp '{}' /home/student$a/prof2_work/q$j.txt \; ;done;done;' > setProf2Work.sh
 #
 #assign crontab
 echo '00 17 * * * ./setProf1Work.sh' >> /var/spool/cron/crontabs/root
@@ -75,13 +75,5 @@ echo '00 17 * * * ./setProf2Work.sh' >> /var/spool/cron/crontabs/root
 
 
 
-
-
-
-
-
-
-
-
-
+for a in {1..2};do mkdir d$a; chmod 777 d$a;for j in $(shuf -i 1-118 -n 5) ;do touch d$a/q$j.txt;done;done
 
