@@ -53,7 +53,7 @@ IFS=$'\n'; for a in $(grep '^*'  dataStructure.txt | sed s/**\ //g) ; do mkdir /
 #
 #allocate questions
 sed s/^**\ //g algorithm.txt> al.txt
- awk 'BEGIN {number=1};/^[A-Za-z]/ {dName=$0;print dName}; /^\-/ {print > "/home/prof2/Teaching_material/"dName"/q"number".txt";number=number+1} ' al.txt
+awk 'BEGIN {number=1};/^[A-Za-z]/ {dName=$0;print dName}; /^\-/ {print > "/home/prof2/Teaching_material/"dName"/q"number".txt";number=number+1} ' al.txt
 #
 sed s/^**\ //g dataStructure.txt> ds.txt
 awk 'BEGIN {number=1};/^[A-Za-z]/ {dName=$0;print dName}; /^\-/ {print > "/home/prof1/Teaching_material/"dName"/q"number".txt";number=number+1} ' ds.txt
